@@ -1,5 +1,5 @@
 # Ansible module: constellix
-### Short description: Interface with Constellix DNS API.
+### Ansible module to interface with Constellix DNS REST API.
 ### Description:
 Retrieve domain information, records within a specified domain, and update existing A records' value and TTL using the Constellix REST API.
 Pull requests encouraged! Limited functionality in it's current state.
@@ -54,7 +54,7 @@ state:
   type: str
 ```
 
-#### Ansible examples
+#### Ansible examples:
 ```
 - name: Fetch my.com domain records
   constellix:
