@@ -1,7 +1,9 @@
 # Ansible module: constellix
 ### Short description: Interface with Constellix DNS API.
 ### Description:
-Retrieve domain information, records within a specified domain, and update existing A records' value and TTL using the Constellix REST API. 
+Retrieve domain information, records within a specified domain, and update existing A records' value and TTL using the Constellix REST API.
+Pull requests encouraged! Limited functionality in it's current state.
+
 Requirements: [ hashlib, hmac ]
 
 > Authors: Brice Burgess (@briceburg) (Adapted to Constellix from [community.general.dnsmadeeasy](https://github.com/ansible-collections/community.general/blob/29bd5a94862f2e12f1fce2c4a9e801c6f5b38405/plugins/modules/net_tools/dnsmadeeasy.py) by Nolan Crooks (@crockk))
