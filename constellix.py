@@ -38,15 +38,14 @@ options:
 
   record_name:
     description:
-      - Record name to get/create/delete/update. If record_name is not specified; all records for the domain will be returned in "result" regardless
+      - Record name to get/update. If record_name is not specified; all records for the domain will be returned in "result" regardless
         of the state argument.
     type: str
 
   record_value:
     description:
       - >
-        Record value. HTTPRED: <redirection URL>, MX: <priority> <target name>, NS: <name server>, PTR: <target name>,
-        SRV: <priority> <weight> <port> <target name>, TXT: <text value>"
+        Record value.
       - >
         If record_value is not specified; no changes will be made and the record will be returned in 'result'
         (in other words, this module can be used to fetch a record's current id, type, and ttl)
@@ -71,7 +70,7 @@ author: "Brice Burgess (@briceburg) (Adapted to Constellix from DNSMadeEasy by N
 
 EXAMPLES = '''
 - name: Fetch my.com domain records
-  community.general.dnsmadeeasy:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
@@ -79,7 +78,7 @@ EXAMPLES = '''
   register: response
 
 - name: Update an A record
-  community.general.constellix:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
@@ -88,7 +87,7 @@ EXAMPLES = '''
     record_value: 192.0.2.23
 
 - name: Fetch a specific record
-  community.general.constellix:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
