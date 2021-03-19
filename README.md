@@ -4,7 +4,7 @@
 Retrieve domain information, records within a specified domain, and update existing A records' value and TTL using the Constellix REST API. 
 Requirements: [ hashlib, hmac ]
 
-> Authors: "Brice Burgess (@briceburg) (Adapted to Constellix from DNSMadeEasy by Nolan Crooks (@crockk))"
+> Authors: Brice Burgess (@briceburg) (Adapted to Constellix from DNSMadeEasy by Nolan Crooks (@crockk))
 
 #### Options:
 ```
