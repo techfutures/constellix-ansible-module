@@ -51,17 +51,17 @@ requirements: [ hashlib, hmac ]
 author: "Brice Burgess (@briceburg) (Adapted to Constellix from DNSMadeEasy by Nolan Crooks (@crockk))"
 ```
 
-#### Examples
+#### Ansible examples
 ```
 - name: Fetch my.com domain records
-  community.general.dnsmadeeasy:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
     state: present
   register: response
 - name: Update an A record
-  community.general.constellix:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
@@ -69,7 +69,7 @@ author: "Brice Burgess (@briceburg) (Adapted to Constellix from DNSMadeEasy by N
     record_name: test
     record_value: 192.0.2.23
 - name: Fetch a specific record
-  community.general.constellix:
+  constellix:
     account_key: key
     account_secret: secret
     domain: my.com
