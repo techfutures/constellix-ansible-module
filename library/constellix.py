@@ -133,9 +133,9 @@ class ConstellixModule(object):
 
         # Lookup the domain ID if passed as a domain name vs. ID
         if not self.domain.isdigit():
-            self.domain = self.getDomainByName(self.domain)
+            self.domain = self.getDomains()
 
-        self.record_url = 'domains/' + str(self.domain['id']) + '/records'
+        self.record_url = 'domains/' + str(self.domain) + '/records'
         self.monitor_url = 'monitor'
         self.contactList_url = 'contactList'
 
@@ -165,11 +165,17 @@ class ConstellixModule(object):
             data = urlencode(data)
 
         response, info = fetch_url(self.module, url, data=data, method=method, headers=self._headers())
+
         if info['status'] not in (200, 201, 204):
             self.module.fail_json(msg="%s returned %s, with body: %s" % (url, info['status'], info['msg']))
 
+#        try:
+#           self.module.warn(warning='QUERY %s' % response.read().decode("utf-8"))
+#        except Exception as e:
+#           self.module.warn(warning='QUERY EXCEPTION %s %s' % (response, e))
+
         try:
-            return json.load(response)
+            return response.read().decode("utf-8")
         except Exception:
             return {}
 
@@ -180,6 +186,7 @@ class ConstellixModule(object):
         return self.domains.get(domain_id, False)
 
     def getDomainByName(self, domain_name):
+#        self.module.warn(warning='%s' % domain_name)
         if not self.domain_map:
             self._instMap('domain')
 
@@ -187,8 +194,8 @@ class ConstellixModule(object):
 
     def getDomains(self):
         response = self.query('domains/search?exact=' + self.domain, 'GET')
-#        self.module.warn(warning='%s' % response)
-        return response #['data']
+        self.module.warn(warning='GET DOMAINS %s' % json.loads(response)[0]['id'])
+        return json.loads(response)[0]['id'] #['data']
 
     def getRecord(self, record_id):
         if not self.record_map:
@@ -208,6 +215,7 @@ class ConstellixModule(object):
 
         if record_type in ["A"]:
             for result in self.all_records:
+#                self.module.warn(warning="COMPARING %s %s" % (result['name'], record_name))
                 if result['name'] == record_name:
                     return result
             return False
@@ -220,7 +228,7 @@ class ConstellixModule(object):
             raise Exception('record_type not yet supported, record type: %s' % record_type)
 
     def getRecords(self):
-        return self.query(self.record_url, 'GET') #['data']
+        return json.loads(self.query(self.record_url, 'GET')) #['data']
 
     def _instMap(self, type):
         # @TODO cache this call so it's executed only once per ansible execution
@@ -229,6 +237,8 @@ class ConstellixModule(object):
 
         # iterate over e.g. self.getDomains() || self.getRecords()
         for result in getattr(self, 'get' + type.title() + 's')():
+ #           self.module.warn(warning='%s' % result)
+
             map[result['name']] = result['id']
             results[result['id']] = result
 
