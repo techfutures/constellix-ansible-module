@@ -1,2 +1,5 @@
 ---
 galaxy_info:
+  author: Nolan Crooks
+  description: Ansible module to interface with Constellix DNS REST API.
+  company: Tech Futures Interactive Inc.
